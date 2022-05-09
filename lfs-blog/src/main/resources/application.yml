@@ -7,6 +7,7 @@ spring:
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
+#    限制了传输文件的大小
     multipart:
       max-file-size: 2MB
       max-request-size: 5MB
@@ -25,5 +26,9 @@ mybatis-plus:
 #  redis:
 #    host: 127.0.0.1
 #    port: 6379
+oss:
+  accessKey: rFjG4lL7S-edXZrQd5AWFoLQoEg0AEEGStn2EJLc
+  secretKey: tgs2j_dbfSH71cC5Uq29Tm4N4CGDyMaqeVH0hZgK
+  bucket: lfs-blog
 
 

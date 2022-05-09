@@ -1,6 +1,7 @@
 package com.lfs.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lfs.domain.ResponseResult;
 import com.lfs.domain.entity.User;
 
 
@@ -12,5 +13,7 @@ import com.lfs.domain.entity.User;
  */
 public interface UserService extends IService<User> {
 
+    //    个人信息
+    ResponseResult userInfo();
 }
 

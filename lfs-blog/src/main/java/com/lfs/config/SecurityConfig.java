@@ -51,6 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").anonymous()
 //                友链认证之后才能访问(测试使用)
 //                .antMatchers("/link/getAllLink").authenticated()
+//                用户信息查询需要认证后才能访问
+                .antMatchers("/user/userInfo").authenticated()
+                .antMatchers("/upload").authenticated()
                 // 除上面外的所有请求全部不需要认证即可访问
                 .anyRequest().permitAll();
 
