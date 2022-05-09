@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 /**
  * 用户表(User)表服务实现类
  *
- * @author makejava
+ * @author CodeShark
  * @since 2022-05-07 16:38:23
  */
 @Service("userService")
@@ -29,6 +29,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //        封装成UserInfoVo
         UserInfoVo vo = BeanCopyUtils.copyBean(user, UserInfoVo.class);
         return ResponseResult.okResult(vo);
+    }
+
+    //    修改个人信息
+    @Override
+    public ResponseResult updateUserInfo(User user) {
+        updateById(user);
+        return ResponseResult.okResult();
     }
 }
 
