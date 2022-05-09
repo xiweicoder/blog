@@ -1,0 +1,4 @@
+com\lfs\domain\entity\Article.class
+com\lfs\mapper\ArticleMapper.class
+com\lfs\service\impl\ArticleServiceImpl.class
+com\lfs\service\ArticleService.class
