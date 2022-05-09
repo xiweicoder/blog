@@ -14,7 +14,7 @@ import com.lfs.domain.entity.Comment;
 public interface CommentService extends IService<Comment> {
 
     //    评论表
-    ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize);
+    ResponseResult commentList(String commentType, Long articleId, Integer pageNum, Integer pageSize);
 
     //    添加评论
     ResponseResult addComment(Comment comment);

@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lfs.constants.SystemConstants;
 import com.lfs.domain.ResponseResult;
 import com.lfs.domain.entity.Comment;
-import com.lfs.domain.entity.User;
 import com.lfs.domain.vo.CommentVo;
 import com.lfs.domain.vo.PageVo;
 import com.lfs.enums.AppHttpCodeEnum;
@@ -15,7 +14,6 @@ import com.lfs.mapper.CommentMapper;
 import com.lfs.service.CommentService;
 import com.lfs.service.UserService;
 import com.lfs.utils.BeanCopyUtils;
-import com.lfs.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -36,18 +34,24 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
 
     @Override
-    public ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize) {
+    public ResponseResult commentList(String commentType, Long articleId, Integer pageNum, Integer pageSize) {
 //        查询对应文章的根评论
 
 //        对articleId进行判断
         LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Comment::getArticleId, articleId);
+
+//        只有文章评论为0 的时候才加这个判断
+        queryWrapper.eq(SystemConstants.ARTICLE_COMMENT.equals(commentType), Comment::getArticleId, articleId);
 
 //        一级评论时间晚的在前面，评论的评论时间早的在前面
         queryWrapper.orderByDesc(Comment::getCreateTime);
 
 //        根评论 root = -1
         queryWrapper.eq(Comment::getRootId, SystemConstants.ROOT_COMMENT);
+
+//        评论类型
+        queryWrapper.eq(Comment::getType, commentType);
+
 
 //        分页查询
         Page<Comment> page = new Page<>(pageNum, pageSize);
