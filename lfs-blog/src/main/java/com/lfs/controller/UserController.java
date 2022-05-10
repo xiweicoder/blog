@@ -1,5 +1,6 @@
 package com.lfs.controller;
 
+import com.lfs.annotation.SystemLog;
 import com.lfs.domain.ResponseResult;
 import com.lfs.domain.entity.User;
 import com.lfs.service.UserService;
@@ -20,6 +21,7 @@ public class UserController {
     }
 
     //    修改个人信息
+    @SystemLog(BusinessName = "更新用户信息")
     @PutMapping("/userInfo")
     public ResponseResult updateUserInfo(@RequestBody User user) {
         return userService.updateUserInfo(user);
