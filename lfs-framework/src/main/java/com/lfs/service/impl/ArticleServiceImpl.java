@@ -96,7 +96,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 //        根据Id查询文章
         Article article = getById(id);
 
+//        4、
         //        从redis中获取view，返回阅读全文时，返回的数据从redis中中获取
+        //        拿到value(viewCount)放到article中返回给前端
         Integer viewCount = redisCache.getCacheMapValue("article:viewCount", id.toString());
         article.setViewCount(viewCount.longValue());
 

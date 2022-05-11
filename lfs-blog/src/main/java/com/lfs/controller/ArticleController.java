@@ -33,7 +33,7 @@ public class ArticleController {
         return articleService.getArticleDetail(id);
     }
 
-//    访问博客查询到redis中的浏览量
+//    2、访问博客查询到redis中的浏览量
     @PutMapping("/updateViewCount/{id}")
     public ResponseResult updateViewCount(@PathVariable("id") Long id) {
         return articleService.updateViewCount(id);

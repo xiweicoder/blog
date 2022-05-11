@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+//3、
 //Redis数据定时同步到数据库中
 @Component
 public class UpdateViewCountJob {
@@ -33,7 +34,7 @@ public class UpdateViewCountJob {
                 .map(entry -> new Article(Long.valueOf(entry.getKey()), entry.getValue().longValue()))
                 .collect(Collectors.toList());
 
-//        更新到数据库中
+//        更新到数据库中 根据Id批量处理数据到数据库中
         articleService.updateBatchById(articles);
     }
 }
