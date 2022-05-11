@@ -15,6 +15,7 @@ import com.lfs.mapper.ArticleMapper;
 import com.lfs.service.ArticleService;
 import com.lfs.service.CategoryService;
 import com.lfs.utils.BeanCopyUtils;
+import com.lfs.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private RedisCache redisCache;
 
     //查询热门文章 封装成ResponseResult返回
     @Override
@@ -91,6 +95,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ResponseResult getArticleDetail(Long id) {
 //        根据Id查询文章
         Article article = getById(id);
+
+        //        从redis中获取view，返回阅读全文时，返回的数据从redis中中获取
+        Integer viewCount = redisCache.getCacheMapValue("article:viewCount", id.toString());
+        article.setViewCount(viewCount.longValue());
+
+
         ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
 //        根据分类名查询分类名
         Long categoryId = articleDetailVo.getCategoryId();
@@ -100,5 +110,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
 //        封装响应返回
         return ResponseResult.okResult(articleDetailVo);
+    }
+
+    //    访问博客查询到redis中的浏览量
+    @Override
+    public ResponseResult updateViewCount(Long id) {
+//        更新redis中对应 id 的浏览量
+        redisCache.incrementCacheMapValue("article:viewCount", id.toString(), 1);
+        return ResponseResult.okResult();
     }
 }

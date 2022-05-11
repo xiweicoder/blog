@@ -24,7 +24,7 @@ import lombok.experimental.Accessors;
 @TableName("sg_article")
 //使set时，有返回值 当你使用setXXX时，可以接收他的值
 @Accessors(chain = true)
-public class Article{
+public class Article {
 
     @TableId
     private Long id;
@@ -37,7 +37,7 @@ public class Article{
     //所属分类id
     private Long categoryId;
 
-//    两个表查询，因为要返回 Article的对象，
+    //    两个表查询，因为要返回 Article的对象，
 //    但因为需要的数据中没有另一个表中的categoryName，所以在Article实体中加入此字段
     @TableField(exist = false)
     private String categoryName;
@@ -52,16 +52,21 @@ public class Article{
     private Long viewCount;
     //是否允许评论 1是，0否
     private String isComment;
-    
+
     private Long createBy;
-    
+
     private Date createTime;
-    
+
     private Long updateBy;
-    
+
     private Date updateTime;
     //删除标志（0代表未删除，1代表已删除）
     private Integer delFlag;
 
+    public Article(Long id, long viewCount) {
+        this.id = id;
+        this.viewCount = viewCount;
+
+    }
 }
 

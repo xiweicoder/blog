@@ -13,4 +13,7 @@ public interface ArticleService extends IService<Article> {
 
     //    点击阅读全文
     ResponseResult getArticleDetail(Long id);
+
+    //    访问博客查询到redis中的浏览量
+    ResponseResult updateViewCount(Long id);
 }
